@@ -1,0 +1,18 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/api/signup",
+        "bodyPatterns": [
+            {
+                "equalToJson": {
+                    "email": "email@valid.com",
+                    "password": "parolavalida"
+                }
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "bodyFiles/auth/signup.json"
+    }
+}
