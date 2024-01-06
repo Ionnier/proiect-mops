@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+import java.util.Calendar;
 
 @Configuration
 @RequiredArgsConstructor
@@ -17,6 +18,8 @@ public class InitializationConfig {
     private final DataSourceProperties dataSourceProperties;
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
 
     public static String ADMIN_EMAIL = "admin@admin.com";
     public static String ADMIN_PASSWORD = "adminpassword";
@@ -35,6 +38,21 @@ public class InitializationConfig {
             User user = userRepository.findByEmail(ADMIN_EMAIL);
             user.isAdmin = true;
             userRepository.save(user);
+
+            Author author1 = authorRepository.save(new Author(null, "J.K. Rowling"));
+            Author author2 = authorRepository.save(new Author(null, "George R.R. Martin"));
+            Author author3 = authorRepository.save(new Author(null, "Jane Austen"));
+            Author author4 = authorRepository.save(new Author(null, "Ernest Hemingway"));
+
+            bookRepository.save(new Book(null, "Harry Potter and the Sorcerer's Stone", "Fantasy", getDate(1997, 6, 26), author1));
+            bookRepository.save(new Book(null, "A Game of Thrones", "Fantasy", getDate(1996, 8, 6), author2));
+            bookRepository.save(new Book(null, "Pride and Prejudice", "Romance", getDate(1813, 1, 28), author3));
+            bookRepository.save(new Book(null, "The Old Man and the Sea", "Fiction", getDate(1952, 9, 1), author4));
         };
+    }
+
+    private Long getDate(int year, int month, int day) {
+        Calendar.getInstance().set(year, month, day);
+        return Calendar.getInstance().getTimeInMillis();
     }
 }
