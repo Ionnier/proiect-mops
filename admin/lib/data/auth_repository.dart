@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 
+// ignore: constant_identifier_names
+const String SERVER_PATH = "http://localhost:8080/api";
+
 class AuthRepository {
   static final AuthRepository _singleton = AuthRepository._internal();
   AuthRepository._internal();
@@ -37,7 +40,7 @@ class AuthRepository {
     }
     headers.addAll({"Accept": "application/json"});
     return Dio(BaseOptions(
-      baseUrl: "http://localhost:8080/api",
+      baseUrl: SERVER_PATH,
       receiveDataWhenStatusError: true,
       validateStatus: (status) => true,
       headers: headers,

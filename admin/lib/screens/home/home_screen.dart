@@ -1,3 +1,4 @@
+import 'package:admin/data/auth_repository.dart';
 import 'package:admin/screens/crudscreen/crud_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,32 @@ class HomeScreen extends StatelessWidget {
                 builder: (context) => const CrudScreen(
                       endpoint: "/data/authors",
                       data: ["authorId", "name"],
-                      supportiveEndpoints: ["/data/authors"],
+                      supportiveEndpoints: [("/data/authors", [])],
+                      problematicFields: [],
+                    )),
+          );
+        }),
+        const SizedBox(
+          height: 16,
+        ),
+        _createCard("Books", "Edit books", () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CrudScreen(
+                      endpoint: "/data/books",
+                      data: const [
+                        "bookId",
+                        "name",
+                        "category",
+                        "releaseDateMillis",
+                      ],
+                      supportiveEndpoints: const [
+                        ("/data/books", ["author"])
+                      ],
+                      problematicFields: [
+                        ("author", (id) => "$SERVER_PATH/data/authors/$id")
+                      ],
                     )),
           );
         }),
