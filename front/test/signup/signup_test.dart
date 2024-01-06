@@ -10,7 +10,8 @@ import 'signup_test.mocks.dart';
 @GenerateMocks([Settings])
 void main() async {
   final (dio, dioAdapter) = testDio();
-  test('test 200 response', () async {
+  group("signup", () {
+    test('test 200 response', () async {
     MockSettings settings = MockSettings();
     when(settings.provideDio()).thenReturn(dio);
     final json = await getMappingData("auth/signup.json");
@@ -22,5 +23,6 @@ void main() async {
     final repo = AuthServiceImpl(dio: dio);
     var (token, _) = await repo.signup("", "", "", "", "", "");
     assert(token?.isNotEmpty == true);
+  });
   });
 }

@@ -27,4 +27,14 @@ public class Utils {
     public Path getStubPath() {
         return Path.of(Path.of("").toAbsolutePath().getParent().toString(), "mockserver", "__files", "bodyFiles");
     }
+
+    @Bean
+    AuthControllerTests provideAuthTests(MockMvc mvc, WebApplicationContext context, ObjectMapper objectMapper, UserRepository userRepository) {
+        AuthControllerTests authControllerTests =  new AuthControllerTests();
+        authControllerTests.mvc = mvc;
+        authControllerTests.context = context;
+        authControllerTests.objectMapper = objectMapper;
+        authControllerTests.userRepository = userRepository;
+        return authControllerTests;
+    }
 }

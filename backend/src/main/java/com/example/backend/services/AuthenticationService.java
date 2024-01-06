@@ -1,6 +1,7 @@
 package com.example.backend.services;
 
 import com.example.backend.models.User;
+import com.example.backend.models.dtos.LoginRequest;
 import com.example.backend.models.dtos.SignupRequest;
 import com.example.backend.models.mappers.UserMapper;
 import com.example.backend.repositories.UserRepository;
@@ -24,6 +25,16 @@ public class AuthenticationService {
         user.obfuscatePassword(passwordEncoder);
         user.isAdmin = false;
         userRepository.save(user);
+        return jwtService.generateToken(user.getUsername());
+    }
+
+    public String login(LoginRequest loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        var user = userRepository.findByEmail(loginRequest.getEmail());
+        if (user == null) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
         return jwtService.generateToken(user.getUsername());
     }
 }

@@ -50,6 +50,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((auth) -> auth
                     .requestMatchers(HttpMethod.OPTIONS).permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/signup").anonymous()
+                    .requestMatchers(HttpMethod.POST, "/api/login").anonymous()
                     .anyRequest().denyAll()
             )
             .cors(CorsConfigurer::disable)
