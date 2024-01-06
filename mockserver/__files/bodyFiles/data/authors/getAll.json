@@ -1,0 +1,68 @@
+{
+    "_embedded": {
+        "authors": [
+            {
+                "authorId": 1,
+                "name": "J.K. Rowling",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/data/authors/1"
+                    },
+                    "author": {
+                        "href": "http://localhost:8080/api/data/authors/1"
+                    }
+                }
+            },
+            {
+                "authorId": 2,
+                "name": "George R.R. Martin",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/data/authors/2"
+                    },
+                    "author": {
+                        "href": "http://localhost:8080/api/data/authors/2"
+                    }
+                }
+            },
+            {
+                "authorId": 3,
+                "name": "Jane Austen",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/data/authors/3"
+                    },
+                    "author": {
+                        "href": "http://localhost:8080/api/data/authors/3"
+                    }
+                }
+            },
+            {
+                "authorId": 4,
+                "name": "Ernest Hemingway",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/data/authors/4"
+                    },
+                    "author": {
+                        "href": "http://localhost:8080/api/data/authors/4"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/data/authors?page=0&size=20"
+        },
+        "profile": {
+            "href": "http://localhost:8080/api/data/profile/authors"
+        }
+    },
+    "page": {
+        "size": 20,
+        "totalElements": 4,
+        "totalPages": 1,
+        "number": 0
+    }
+}

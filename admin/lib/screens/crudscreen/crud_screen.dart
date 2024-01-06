@@ -7,13 +7,15 @@ import 'package:provider/provider.dart';
 class CrudScreen extends StatelessWidget {
   final String endpoint;
   final List<String> data;
-  final List<String> supportiveEndpoints;
+  final List<(String, String Function(String))> problematicFields;
+  final List<(String, List<String>)> supportiveEndpoints;
 
   const CrudScreen(
       {super.key,
       required this.endpoint,
       required this.data,
-      required this.supportiveEndpoints});
+      required this.supportiveEndpoints,
+      required this.problematicFields});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,9 @@ class CrudScreen extends StatelessWidget {
         builder: (context, vm, child) {
           var controllers =
               data.map((e) => (e, TextEditingController())).toList();
+          controllers.addAll(problematicFields
+              .map((e) => (e.$1, TextEditingController()))
+              .toList());
           List<Widget> items = controllers.map((e) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -46,9 +51,23 @@ class CrudScreen extends StatelessWidget {
           ));
 
           Map<String, dynamic> collectData() {
-            return {
-              for (var element in controllers) element.$1: element.$2.text
-            };
+            var emptyMap = Map<String, dynamic>.of({});
+            for (var element in controllers) {
+              bool wasAdded = false;
+              for (var problematic in problematicFields) {
+                if (element.$1 == problematic.$1) {
+                  emptyMap.addEntries(
+                      [MapEntry(element.$1, problematic.$2(element.$2.text))]);
+                  wasAdded = true;
+                  break;
+                }
+              }
+              if (wasAdded) {
+                break;
+              }
+              emptyMap.addEntries([MapEntry(element.$1, element.$2.text)]);
+            }
+            return emptyMap;
           }
 
           newItems.add(ElevatedButton(
@@ -87,7 +106,10 @@ class CrudScreen extends StatelessWidget {
           }
 
           for (var element in supportiveEndpoints) {
-            newItems.add(SimpleSelect(endpoint: element));
+            newItems.add(SimpleSelect(
+              endpoint: element.$1,
+              linksKeeper: element.$2,
+            ));
           }
           return Scaffold(
             appBar: AppBar(),
