@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.BaseTestClass;
 import com.example.backend.models.dtos.LoginRequest;
 import com.example.backend.models.dtos.SignupRequest;
 import com.example.backend.models.responses.AuthResponse;
@@ -24,23 +25,7 @@ import java.util.Objects;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AuthControllerTests {
-    @Autowired
-    public MockMvc mvc;
-
-    @Autowired
-    public WebApplicationContext context;
-
-    @Autowired
-    public ObjectMapper objectMapper;
-
-    @Autowired
-    public UserRepository userRepository;
-
-    @Autowired
-    public Path stubsPath;
+public class AuthControllerTests extends BaseTestClass {
 
     public final SignupRequest validSignUpRequest = new SignupRequest("asd@cti.ro", "asdasdasdsadsa", "asdasdas", "FirstName", "LastName", "addressada");
     public final LoginRequest validLoginRequest = new LoginRequest(validSignUpRequest.email, validSignUpRequest.password);

@@ -51,6 +51,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.OPTIONS).permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/signup").anonymous()
                     .requestMatchers(HttpMethod.POST, "/api/login").anonymous()
+                    .requestMatchers("/api/data/**").hasRole("ADMIN")
                     .anyRequest().denyAll()
             )
             .cors(CorsConfigurer::disable)
