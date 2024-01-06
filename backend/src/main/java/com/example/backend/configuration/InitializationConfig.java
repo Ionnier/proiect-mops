@@ -51,8 +51,9 @@ public class InitializationConfig {
         };
     }
 
-    private Long getDate(int year, int month, int day) {
-        Calendar.getInstance().set(year, month, day);
-        return Calendar.getInstance().getTimeInMillis();
+    public static Long getDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        return calendar.getTimeInMillis();
     }
 }

@@ -1,0 +1,25 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/api/books",
+        "headers": {
+            "Authorization": {
+                "equalTo": "Bearer gibberishjwt"
+            }
+        },
+        "bodyPatterns": [
+            {
+                "matchesJsonPath": "$.bookId"
+            },
+            {
+                "matchesJsonPath": "$.startDateTimestamp"
+            },
+            {
+                "matchesJsonPath": "$.numberOfDays"
+            }
+        ]
+    },
+    "response": {
+        "status": 201
+    }
+}

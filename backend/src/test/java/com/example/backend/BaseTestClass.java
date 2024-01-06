@@ -1,5 +1,7 @@
 package com.example.backend;
 
+import com.example.backend.repositories.BookInventoryRepository;
+import com.example.backend.repositories.BookRepository;
 import com.example.backend.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +16,24 @@ import java.nio.file.Path;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public abstract class BaseTestClass {
     @Autowired
-    public MockMvc mvc;
+    protected MockMvc mvc;
 
     @Autowired
-    public WebApplicationContext context;
+    protected WebApplicationContext context;
 
     @Autowired
-    public ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
     @Autowired
-    public UserRepository userRepository;
+    protected UserRepository userRepository;
 
     @Autowired
-    public Path stubsPath;
+    protected Path stubsPath;
+
+    @Autowired
+    protected BookInventoryRepository bookInventoryRepository;
+
+    @Autowired
+    protected BookRepository bookRepository;
 
 }
