@@ -1,5 +1,6 @@
 package com.example.backend.controllers;
 
+import com.example.backend.models.dtos.LoginRequest;
 import com.example.backend.models.dtos.SignupRequest;
 import com.example.backend.models.responses.AuthResponse;
 import com.example.backend.services.AuthenticationService;
@@ -15,6 +16,11 @@ public class AuthController {
     @PostMapping("/api/signup")
     public AuthResponse registerUser(@RequestBody @Valid SignupRequest signupRequest) {
         return new AuthResponse(authenticationService.signUp(signupRequest));
+    }
+
+    @PostMapping("/api/login")
+    public AuthResponse loginUser(@RequestBody @Valid LoginRequest request) {
+        return new AuthResponse(authenticationService.login(request));
     }
 }
 

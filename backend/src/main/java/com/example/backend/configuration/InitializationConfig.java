@@ -15,6 +15,11 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class InitializationConfig {
     private final DataSourceProperties dataSourceProperties;
+    private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
+
+    public static String ADMIN_EMAIL = "admin@admin.com";
+    public static String ADMIN_PASSWORD = "adminpassword";
 
     @Bean
     public CommandLineRunner dataLoader() {
@@ -26,6 +31,10 @@ public class InitializationConfig {
                 return;
             }
 
+            authenticationService.signUp(new SignupRequest(ADMIN_EMAIL, ADMIN_PASSWORD, "admin", "admin", "admin", "admin address"));
+            User user = userRepository.findByEmail(ADMIN_EMAIL);
+            user.isAdmin = true;
+            userRepository.save(user);
         };
     }
 }

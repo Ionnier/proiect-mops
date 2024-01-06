@@ -1,8 +1,10 @@
 package com.example.backend.controller;
 
+import com.example.backend.models.dtos.LoginRequest;
 import com.example.backend.models.dtos.SignupRequest;
 import com.example.backend.models.responses.AuthResponse;
 import com.example.backend.repositories.UserRepository;
+import com.example.backend.utils.AuthenticationTestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,8 @@ public class AuthControllerTests {
     @Autowired
     public Path stubsPath;
 
-    private final SignupRequest validSignUpRequest = new SignupRequest("asd@cti.ro", "asdasdasdsadsa", "asdasdas", "FirstName", "LastName", "addressada");
+    public final SignupRequest validSignUpRequest = new SignupRequest("asd@cti.ro", "asdasdasdsadsa", "asdasdas", "FirstName", "LastName", "addressada");
+    public final LoginRequest validLoginRequest = new LoginRequest(validSignUpRequest.email, validSignUpRequest.password);
 
     @Test
     public void testValidSignUp() throws Exception {
@@ -96,6 +99,53 @@ public class AuthControllerTests {
                         .post("/api/signup")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .content(objectMapper.writeValueAsString(validSignUpRequest.toBuilder().email("asdasdasd@asd.com").build()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testLogin() throws Exception {
+        testValidSignUp();
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/login")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(objectMapper.writeValueAsString(validLoginRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testLoginNoUser() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/login")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(objectMapper.writeValueAsString(validLoginRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testLoginWrongEmail() throws Exception {
+        testValidSignUp();
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/login")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(objectMapper.writeValueAsString(validLoginRequest.toBuilder().email("hey@cti.ro").build()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testLoginBadEmail() throws Exception {
+        testValidSignUp();
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/login")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(objectMapper.writeValueAsString(validLoginRequest.toBuilder().email("heyctiro").build()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

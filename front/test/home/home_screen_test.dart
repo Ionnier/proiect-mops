@@ -47,7 +47,8 @@ void main() {
     }), findsAtLeast(2));
   });
 
-  testWidgets('Test move to SignupScreen', (WidgetTester tester) async {
+  void testMoveScreen(WidgetTester tester, bool Function(Widget) predicate,
+      bool Function(Widget) predicate2) async {
     var mockedAuthService = MockAuthService();
     var mockedSettings = MockSettings();
     await tester.pumpWidget(
@@ -78,5 +79,15 @@ void main() {
       }
       return false;
     }), findsOne);
+  }
+
+  testWidgets('Test move to SignupScreen', (WidgetTester tester) async {
+    testMoveScreen(tester, (widget) => widget is OutlinedButton,
+        (widget) => widget is SignUpScreen);
+  });
+
+  testWidgets('Test move to LoginScreen', (WidgetTester tester) async {
+    testMoveScreen(tester, (widget) => widget is FilledButton,
+        (widget) => widget is SignUpScreen);
   });
 }
