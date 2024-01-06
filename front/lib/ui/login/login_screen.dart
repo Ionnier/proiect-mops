@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_validation/form_validation.dart';
+import 'package:front/ui/dashboard/dashboard_screen.dart';
 import 'package:front/ui/login/login_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,10 @@ class LoginScreen extends StatelessWidget {
       builder: (context, viewModel, child) {
         Future.delayed(Duration.zero, () {
           if (viewModel.wasLoggedInSuccesfully) {
-            print("Should move next screen");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DashboardScreen()),
+            );
           }
         });
 
