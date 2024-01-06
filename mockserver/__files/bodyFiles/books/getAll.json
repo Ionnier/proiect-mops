@@ -1,0 +1,42 @@
+[
+    {
+        "bookId": 1,
+        "name": "Harry Potter and the Sorcerer's Stone",
+        "category": "Fantasy",
+        "releaseDateMillis": 1704554061514,
+        "author": {
+            "authorId": 1,
+            "name": "J.K. Rowling"
+        }
+    },
+    {
+        "bookId": 2,
+        "name": "A Game of Thrones",
+        "category": "Fantasy",
+        "releaseDateMillis": 1704554061515,
+        "author": {
+            "authorId": 2,
+            "name": "George R.R. Martin"
+        }
+    },
+    {
+        "bookId": 3,
+        "name": "Pride and Prejudice",
+        "category": "Romance",
+        "releaseDateMillis": 1704554061516,
+        "author": {
+            "authorId": 3,
+            "name": "Jane Austen"
+        }
+    },
+    {
+        "bookId": 4,
+        "name": "The Old Man and the Sea",
+        "category": "Fiction",
+        "releaseDateMillis": 1704554061517,
+        "author": {
+            "authorId": 4,
+            "name": "Ernest Hemingway"
+        }
+    }
+]
