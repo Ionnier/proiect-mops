@@ -1,0 +1,28 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/api/data/books",
+        "headers": {
+            "Authorization": {
+                "equalTo": "Bearer gibberishjwt"
+            }
+        },
+        "bodyPatterns": [
+            {
+                "matchesJsonPath": "$.name"
+            },
+            {
+                "matchesJsonPath": "$.category"
+            },
+            {
+                "matchesJsonPath": "$.releaseDateMillis"
+            },
+            {
+                "matchesJsonPath": "$.author"
+            }
+        ]
+    },
+    "response": {
+        "status": 201
+    }
+}

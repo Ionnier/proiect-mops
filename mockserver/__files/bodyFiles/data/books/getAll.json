@@ -1,0 +1,88 @@
+{
+    "_embedded": {
+        "books": [
+            {
+                "bookId": 1,
+                "name": "Harry Potter and the Sorcerer's Stone",
+                "category": "Fantasy",
+                "releaseDateMillis": 1704559947576,
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/api/data/books/1"
+                    },
+                    "book": {
+                        "href": "http://localhost/api/data/books/1"
+                    },
+                    "author": {
+                        "href": "http://localhost/api/data/books/1/authorId"
+                    }
+                }
+            },
+            {
+                "bookId": 2,
+                "name": "A Game of Thrones",
+                "category": "Fantasy",
+                "releaseDateMillis": 1704559947577,
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/api/data/books/2"
+                    },
+                    "book": {
+                        "href": "http://localhost/api/data/books/2"
+                    },
+                    "author": {
+                        "href": "http://localhost/api/data/books/2/authorId"
+                    }
+                }
+            },
+            {
+                "bookId": 3,
+                "name": "Pride and Prejudice",
+                "category": "Romance",
+                "releaseDateMillis": 1704559947578,
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/api/data/books/3"
+                    },
+                    "book": {
+                        "href": "http://localhost/api/data/books/3"
+                    },
+                    "author": {
+                        "href": "http://localhost/api/data/books/3/authorId"
+                    }
+                }
+            },
+            {
+                "bookId": 4,
+                "name": "The Old Man and the Sea",
+                "category": "Fiction",
+                "releaseDateMillis": 1704559947578,
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/api/data/books/4"
+                    },
+                    "book": {
+                        "href": "http://localhost/api/data/books/4"
+                    },
+                    "author": {
+                        "href": "http://localhost/api/data/books/4/authorId"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost/api/data/books?page=0&size=20"
+        },
+        "profile": {
+            "href": "http://localhost/api/data/profile/books"
+        }
+    },
+    "page": {
+        "size": 20,
+        "totalElements": 4,
+        "totalPages": 1,
+        "number": 0
+    }
+}

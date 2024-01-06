@@ -14,7 +14,7 @@ public class RestConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config.setBasePath("/api/data");
-        config.exposeIdsFor(Author.class);
+        config.exposeIdsFor(Author.class, Book.class);
         cors.addMapping("/**").allowedMethods("*").allowCredentials(false).maxAge(3600);
     }
 }

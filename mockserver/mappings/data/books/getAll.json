@@ -1,0 +1,15 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/api/data/books",
+        "headers": {
+            "Authorization": {
+                "equalTo": "Bearer gibberishjwt"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "bodyFiles/data/books/getAll.json"
+    }
+}
