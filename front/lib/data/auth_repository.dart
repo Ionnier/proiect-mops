@@ -69,8 +69,7 @@ class AuthServiceImpl implements AuthService {
       });
       if (response.statusCode != 200) {
         return (null, "Received statusCode=${response.statusCode}");
-      }
-    print(response);
+    }
       if (response.data == null) {
         return (null, "Received empty body");
       }
