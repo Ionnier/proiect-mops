@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/ui/signup/sign_up_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,7 +26,14 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                  onPressed: () => {}, child: const Text("Sign up"))),
+                  onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpScreen()),
+                        )
+                      },
+                  child: const Text("Sign up"))),
           const SizedBox(height: 16),
         ],
       ),
