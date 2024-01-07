@@ -1,0 +1,41 @@
+[
+    {
+        "id": {
+            "inventoryId": 1,
+            "userId": 2,
+            "createdAt": 1704664800000
+        },
+        "user": {
+            "id": 2,
+            "email": "asd@cti.ro",
+            "ssn": "asdasdas",
+            "password": "$2a$10$UpjUj193YHbzdZ.mRMDMYeQQrc/mm5ZLyoW3rfShzJDzZ0fk2K54y",
+            "firstName": "FirstName",
+            "lastName": "LastName",
+            "address": "addressada",
+            "isAdmin": false,
+            "enabled": true,
+            "accountNonExpired": true,
+            "accountNonLocked": true,
+            "credentialsNonExpired": true,
+            "username": "asd@cti.ro"
+        },
+        "bookInventory": {
+            "inventoryId": 1,
+            "state": "",
+            "book": {
+                "bookId": 1,
+                "name": "Harry Potter and the Sorcerer's Stone",
+                "category": "Fantasy",
+                "releaseDateMillis": 869939058603,
+                "author": {
+                    "authorId": 1,
+                    "name": "J.K. Rowling"
+                }
+            }
+        },
+        "state": "AWAITING_PICK_UP",
+        "dueDate": 1705096800000,
+        "isAllowed": true
+    }
+]

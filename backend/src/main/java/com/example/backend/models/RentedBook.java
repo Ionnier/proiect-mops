@@ -25,7 +25,7 @@ public class RentedBook {
         id = new RentedBookMMId(bookInventory.inventoryId, user.id, fromDate);
         this.dueDate = dueDate;
         this.isAllowed = true;
-        this.state = BookRentalState.AWAITING_PICK_UP;
+        this.state = BookRentalState.PREPARING;
     }
 
     @ManyToOne

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:front/data/settings.dart';
 import 'package:front/ui/book_list_view/book_list_view.dart';
+import 'package:front/ui/core/margin.dart';
+import 'package:front/ui/rental_history/rental_history_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -53,6 +55,14 @@ class DashboardScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const BookListView()));
+            }),
+            const Margin(),
+            createCard(context, "Rental History", "See rental history",
+                Icons.calendar_month, () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RentalHistoryScreen()));
             }),
           ]),
         ));

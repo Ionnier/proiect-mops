@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:front/data/books_repository.dart';
+import 'package:front/data/rental_repository.dart';
 import 'package:front/ui/dashboard/dashboard_screen.dart';
 import 'package:front/data/auth_repository.dart';
 import 'package:front/data/settings.dart';
@@ -19,7 +20,9 @@ void main() async {
                   AuthServiceImpl(dio: Settings().provideDio()), Settings()))),
       Provider<BaseCacheManager>(create: (context) => DefaultCacheManager()),
       Provider<BooksRepository>(
-          create: (context) => BooksRepository(Settings()))
+          create: (context) => BooksRepository(Settings())),
+      Provider<RentalRepository>(
+          create: (context) => RentalRepository(Settings()))
     ],
     child: const MyApp(),
   ));
