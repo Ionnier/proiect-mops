@@ -4,16 +4,20 @@ import com.example.backend.BaseTestClass;
 import com.example.backend.configuration.InitializationConfig;
 import com.example.backend.models.BookInventory;
 import com.example.backend.models.BookRentalState;
+import com.example.backend.models.RentedBook;
 import com.example.backend.models.dtos.RentBookRequest;
 import com.example.backend.models.dtos.ReviewRequest;
 import com.example.backend.utils.AuthenticationTestUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -281,4 +285,35 @@ public class BookControllerTests extends BaseTestClass {
                 .andExpect(status().isForbidden());
     }
     // END TDD
+
+    @Test
+    public void getRentalsAsAnonymousFails() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/api/rentals")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void getRentalsEmpty() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/api/rentals")
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.user())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getRentalsAtLeastOne() throws Exception {
+        rentBook();
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders
+                        .get("/api/rentals")
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.user())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+        List<RentedBook> rentedBooks = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {
+        });
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        assert rentedBooks.size() == 1;
+    }
 }
