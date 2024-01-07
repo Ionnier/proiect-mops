@@ -8,7 +8,7 @@ Future<dynamic> getMappingData(String mappingFile,
   var file = join(Directory.current.parent.path, "mockserver", "__files",
       "bodyFiles", mappingFile, part2, part3, part4);
   var data = await File(file).readAsString();
-  return Future.value(data);
+  return data;
 }
 
 (Dio, DioAdapter) testDio() {
