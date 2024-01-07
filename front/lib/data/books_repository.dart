@@ -21,4 +21,24 @@ class BooksRepository {
       return null;
     }
   }
+
+  Future<String?> rentBook(int bookId, DateTime startDate, int duration) async {
+    var dio = _settings.provideDio();
+    var response = await dio.post("/books", data: {
+      'bookId': bookId,
+      'startDateTimestamp': startDate.millisecondsSinceEpoch,
+      "numberOfDays": duration,
+    });
+    try {
+      if (response.statusCode == 201) {
+        return null;
+      }
+      if (response.statusCode == 404) {
+        return "Not available";
+      }
+      return "An error occured";
+    } on Exception {
+      return "An error occured";
+    }
+  }
 }

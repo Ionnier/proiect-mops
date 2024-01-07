@@ -29,12 +29,7 @@ public class Utils {
     }
 
     @Bean
-    AuthControllerTests provideAuthTests(MockMvc mvc, WebApplicationContext context, ObjectMapper objectMapper, UserRepository userRepository) {
-        AuthControllerTests authControllerTests =  new AuthControllerTests();
-        authControllerTests.mvc = mvc;
-        authControllerTests.context = context;
-        authControllerTests.objectMapper = objectMapper;
-        authControllerTests.userRepository = userRepository;
-        return authControllerTests;
+    AuthControllerTests provideAuthTests() {
+        return new AuthControllerTests();
     }
 }

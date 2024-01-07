@@ -49,6 +49,7 @@ dependencies:
   rxdart: ^0.27.7
   mvvm: ^0.5.2
   stream_transform: ^2.1.0
+  date_field: ^4.0.0
 
 dev_dependencies:
   flutter_test:
