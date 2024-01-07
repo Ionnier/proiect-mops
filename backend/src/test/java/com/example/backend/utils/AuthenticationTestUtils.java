@@ -25,7 +25,7 @@ public class AuthenticationTestUtils {
 
     public String authorization = "Authorization";
 
-    public String user() throws Exception {
+    void barrierUser() throws Exception {
         if (userRepository.findByEmail(authControllerTests.validSignUpRequest.email) == null) {
             try {
                 authControllerTests.testValidSignUp();
@@ -33,7 +33,16 @@ public class AuthenticationTestUtils {
                 throw e;
             }
         }
+    }
+
+    public String user() throws Exception {
+        barrierUser();
         return "Bearer " + authenticationService.login(authControllerTests.validLoginRequest);
+    }
+
+    public User userEntity() throws Exception {
+        barrierUser();
+        return userRepository.findByEmail(authControllerTests.validSignUpRequest.email);
     }
 
     public String admin() throws Exception {
