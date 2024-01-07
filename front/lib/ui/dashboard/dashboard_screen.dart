@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:front/data/books_repository.dart';
 import 'package:front/data/settings.dart';
 import 'package:front/ui/book_list_view/book_list_view.dart';
-import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -54,11 +52,7 @@ class DashboardScreen extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Provider(
-                      create: (context) => BooksRepository(Settings()),
-                      child: const BookListView(),
-                    ),
-                  ));
+                      builder: (context) => const BookListView()));
             }),
           ]),
         ));

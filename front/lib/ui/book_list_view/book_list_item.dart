@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/models/book.dart';
+import 'package:front/ui/book_view/book_view.dart';
 
 class BookListItem extends StatelessWidget {
   final Book book;
@@ -18,6 +19,14 @@ class BookListItem extends StatelessWidget {
         style: Theme.of(context).textTheme.labelMedium,
       ),
       tileColor: Theme.of(context).colorScheme.primaryContainer,
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookView(book: book),
+          ),
+        ),
+      },
     );
   }
 }
