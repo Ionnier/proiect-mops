@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:front/data/books_repository.dart';
 import 'package:front/models/book.dart';
 import 'package:front/ui/book_view/rent_book_dialog.dart';
+import 'package:front/ui/book_view/review_dialog.dart';
 import 'package:front/ui/core/margin.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class BookView extends StatelessWidget {
@@ -50,6 +53,24 @@ class BookView extends StatelessWidget {
                     },
                     icon: const Icon(Icons.edit_calendar))
               ],
+            ),
+            const Margin(),
+            Consumer<BooksRepository>(
+              builder: (context, value, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () async {
+                          await showDialog(
+                              context: context,
+                              builder: (context) => showReviewDailog(
+                                  context, book.bookId, value));
+                        },
+                        child: const Text("Review"))
+                  ],
+                );
+              },
             ),
           ]),
         ));

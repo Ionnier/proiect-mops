@@ -41,4 +41,26 @@ class BooksRepository {
       return "An error occured";
     }
   }
+
+  Future<String?> writeReview(int bookId, String content) async {
+    var dio = _settings.provideDio();
+    var response = await dio.post("/books/reviews", data: {
+      'bookId': bookId,
+      'content': content,
+    });
+    try {
+      if (response.statusCode == 201) {
+        return null;
+      }
+      if (response.statusCode == 404) {
+        return "Not found";
+      }
+      if (response.statusCode == 400) {
+        return "Bad request";
+      }
+      return "An error occured";
+    } on Exception {
+      return "An error occured";
+    }
+  }
 }

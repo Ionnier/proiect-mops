@@ -1,0 +1,25 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/api/books/reviews",
+        "headers": {
+            "Authorization": {
+                "equalTo": "Bearer gibberishjwt"
+            }
+        },
+        "bodyPatterns": [
+            {
+                "matchesJsonPath": "$.bookId"
+            },
+            {
+                "matchesJsonPath": "$.content"
+            },
+            {
+                "matchesJsonPath": "$.numberOfDays"
+            }
+        ]
+    },
+    "response": {
+        "status": 201
+    }
+}
