@@ -52,6 +52,25 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
+        _createCard("Book Inventory", "Manage book inventory", () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CrudScreen(
+                      endpoint: "/data/bookInventories",
+                      data: const [
+                        "inventoryId",
+                        "state",
+                      ],
+                      supportiveEndpoints: const [
+                        ("/data/bookInventories", ["book"])
+                      ],
+                      problematicFields: [
+                        ("book", (id) => "$SERVER_PATH/data/books/$id")
+                      ],
+                    )),
+          );
+        }),
       ]),
     );
   }
