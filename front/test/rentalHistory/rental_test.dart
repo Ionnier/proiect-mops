@@ -39,9 +39,11 @@ void main() async {
 
   testWidgets('Tapping Rental History goes to Rental History Screen',
       (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: DashboardScreen(),
-    ));
+    await tester.pumpWidget(Provider<RentalRepository>(
+        create: (context) => RentalRepository(mockedSettings),
+        child: const MaterialApp(
+          home: DashboardScreen(),
+        )));
     await tester.pumpAndSettle();
     await tester.tap(find.text("Rental History"));
     await tester.pumpAndSettle();
