@@ -16,6 +16,7 @@ void main() async {
   var mockedSettings = MockSettings();
   final (dio, dioAdapter) = testDio();
   when(mockedSettings.provideDio()).thenReturn(dio);
+  when(mockedSettings.getFavoritedIds()).thenReturn([]);
   final json = await getMappingData("books/getAll.json");
   dioAdapter.onGet("/books", (request) async {
     request.reply(200, json, headers: {
@@ -25,8 +26,11 @@ void main() async {
   var bookRepository = BooksRepository(mockedSettings);
 
   Future<void> pumpScreen(WidgetTester tester) async {
-    await tester.pumpWidget(Provider<BooksRepository>(
-      create: (context) => bookRepository,
+    await tester.pumpWidget(MultiProvider(
+      providers: [
+        Provider<Settings>(create: (context) => mockedSettings),
+        Provider<BooksRepository>(create: (context) => bookRepository),
+      ],
       child: const MaterialApp(
         home: BookListView(),
       ),
@@ -128,5 +132,19 @@ void main() async {
           }
           return false;
         })));
+  });
+
+  testWidgets('There exists hearth icons equal to number of books',
+      (WidgetTester tester) async {
+    await pumpScreen(tester);
+    expect(find.byWidgetPredicate((widget) {
+      if (widget is IconButton) {
+        final icon = widget.icon as Icon;
+        if (icon.icon == Icons.favorite_outline) {
+          return true;
+        }
+      }
+      return false;
+    }), findsAtLeast(4));
   });
 }
