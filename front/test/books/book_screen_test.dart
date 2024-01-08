@@ -47,4 +47,61 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.byType(BookListItem), findsNothing);
   });
+
+  testWidgets('Exist filter chips based on category',
+      (WidgetTester tester) async {
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+    expect(find.byType(FilterChip), findsAny);
+  });
+
+  testWidgets('Selecting a filter chip filters books',
+      (WidgetTester tester) async {
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byWidgetPredicate((widget) {
+      if (widget is FilterChip) {
+        final label = widget.label;
+        if (label is Text) {
+          if (label.data == "Fantasy") {
+            return true;
+          }
+        }
+      }
+      return false;
+    }));
+    await tester.pumpAndSettle();
+    expect(find.byType(BookListItem), findsAtLeast(2));
+  });
+
+  testWidgets('Selecting a filter again removes filters',
+      (WidgetTester tester) async {
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byWidgetPredicate((widget) {
+      if (widget is FilterChip) {
+        final label = widget.label;
+        if (label is Text) {
+          if (label.data == "Fantasy") {
+            return true;
+          }
+        }
+      }
+      return false;
+    }));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byWidgetPredicate((widget) {
+      if (widget is FilterChip) {
+        final label = widget.label;
+        if (label is Text) {
+          if (label.data == "Fantasy") {
+            return true;
+          }
+        }
+      }
+      return false;
+    }));
+    await tester.pumpAndSettle();
+    expect(find.byType(BookListItem), findsAtLeast(4));
+  });
 }

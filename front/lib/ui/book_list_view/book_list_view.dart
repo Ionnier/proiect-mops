@@ -14,6 +14,7 @@ class BookListContent extends StatefulWidget {
 
 class _BookListContentState extends State<BookListContent> {
   String currentString = "";
+  String selectedChip = "";
   final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,28 @@ class _BookListContentState extends State<BookListContent> {
         ),
       )
     ];
+    final categories = (widget.data ?? []).map((e) => e.category).toSet();
+    children.add(
+      Wrap(
+        spacing: 5.0,
+        children: categories.map((e) {
+          return FilterChip(
+              label: Text(e),
+              selected: selectedChip == e,
+              onSelected: (bool selected) {
+                if (selectedChip == e) {
+                  setState(() {
+                    selectedChip = "";
+                  });
+                  return;
+                }
+                setState(() {
+                  selectedChip = e;
+                });
+              });
+        }).toList(),
+      ),
+    );
     for (var book in widget.data ?? List.empty()) {
       if (currentString.isNotEmpty &&
           !(book as Book)
@@ -48,6 +71,9 @@ class _BookListContentState extends State<BookListContent> {
               .trim()
               .toLowerCase()
               .contains(currentString.toLowerCase())) {
+        continue;
+      }
+      if (selectedChip.isNotEmpty && (book as Book).category != selectedChip) {
         continue;
       }
       children.add(BookListItem(book: book));
