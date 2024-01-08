@@ -104,4 +104,29 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.byType(BookListItem), findsAtLeast(4));
   });
+
+  testWidgets('There exists a sort text', (WidgetTester tester) async {
+    await pumpScreen(tester);
+    expect(find.text("Sort"), findsOne);
+  });
+
+  testWidgets('Pressing sort text', (WidgetTester tester) async {
+    await pumpScreen(tester);
+    BookListItem? firstItem =
+        tester.firstWidget(find.byWidgetPredicate((widget) {
+      if (widget is BookListItem) {
+        return true;
+      }
+      return false;
+    }));
+    await tester.tap(find.text("Sort"));
+    await tester.pumpAndSettle();
+    assert(firstItem !=
+        tester.firstWidget(find.byWidgetPredicate((widget) {
+          if (widget is BookListItem) {
+            return true;
+          }
+          return false;
+        })));
+  });
 }

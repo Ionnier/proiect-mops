@@ -15,6 +15,7 @@ class BookListContent extends StatefulWidget {
 class _BookListContentState extends State<BookListContent> {
   String currentString = "";
   String selectedChip = "";
+  bool isSorting = false;
   final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,24 @@ class _BookListContentState extends State<BookListContent> {
         }).toList(),
       ),
     );
-    for (var book in widget.data ?? List.empty()) {
+    children.add(TextButton(
+        onPressed: () {
+          setState(() {
+            isSorting = true;
+          });
+        },
+        child: const Text("Sort")));
+    var sortedData = widget.data ?? List.empty();
+    if (isSorting) {
+      sortedData.sort(
+        (a, b) {
+          return a.name.compareTo(b.name);
+        },
+      );
+    } else {
+      sortedData = widget.data ?? List.empty();
+    }
+    for (var book in sortedData) {
       if (currentString.isNotEmpty &&
           !(book as Book)
               .name
