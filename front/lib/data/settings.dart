@@ -5,6 +5,7 @@ class Settings {
   static final Settings _singleton = Settings._internal();
   SharedPreferences? _prefs;
   static const _jwtKey = "JWT_KEY";
+  static const _favoritedItems = "FAVORITES";
   static const baseUrl = "http://localhost:8080/api";
 
   factory Settings() {
@@ -14,6 +15,18 @@ class Settings {
   Future<void> initialise() async {
     _prefs = await SharedPreferences.getInstance();
     return;
+  }
+
+  List<String>? getFavoritedIds() {
+    return _prefs!.getStringList(_favoritedItems);
+  }
+
+  void setFavorites(List<String>? value) async {
+    if (value == null) {
+      await _prefs!.remove(_favoritedItems);
+      return;
+    }
+    await _prefs!.setStringList(_favoritedItems, value);
   }
 
   Dio provideDio() {

@@ -19,6 +19,7 @@ void main() async {
               authRepository: AuthRepository(
                   AuthServiceImpl(dio: Settings().provideDio()), Settings()))),
       Provider<BaseCacheManager>(create: (context) => DefaultCacheManager()),
+      Provider<Settings>(create: (context) => Settings()),
       Provider<BooksRepository>(
           create: (context) => BooksRepository(Settings())),
       Provider<RentalRepository>(
