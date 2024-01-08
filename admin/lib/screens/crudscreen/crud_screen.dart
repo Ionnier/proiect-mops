@@ -109,6 +109,8 @@ class CrudScreen extends StatelessWidget {
             newItems.add(SimpleSelect(
               endpoint: element.$1,
               linksKeeper: element.$2,
+              prelucrateEmbedded: true,
+              onRowSelect: (int index, map) {},
             ));
           }
           return Scaffold(

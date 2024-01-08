@@ -33,6 +33,25 @@ class AuthRepository {
     }
   }
 
+  Future<String?> updateRentedBook(
+      int inventoryId, int userId, int createdAt, String state) async {
+    var dio = provideDio();
+    try {
+      var response = await dio.patch('/data/rentals', data: {
+        'inventoryId': inventoryId,
+        'userId': userId,
+        'createdAt': createdAt,
+        'state': state,
+      });
+      if (response.statusCode == 200) {
+        return null;
+      }
+      return "Error -> ${response.statusCode}";
+    } on Exception {
+      return "Random error occured";
+    }
+  }
+
   Dio provideDio() {
     Map<String, dynamic> headers = {};
     if (jwtKey != null) {

@@ -1,5 +1,6 @@
 import 'package:admin/data/auth_repository.dart';
 import 'package:admin/screens/crudscreen/crud_screen.dart';
+import 'package:admin/screens/rentalscreen/rental_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -70,6 +71,13 @@ class HomeScreen extends StatelessWidget {
                       ],
                     )),
           );
+        }),
+        const SizedBox(
+          height: 16,
+        ),
+        _createCard("Rentals", "Manage rentals", () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => RentalScreen()));
         }),
       ]),
     );

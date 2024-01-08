@@ -6,6 +6,7 @@ import com.example.backend.models.BookInventory;
 import com.example.backend.models.BookRentalState;
 import com.example.backend.models.RentedBook;
 import com.example.backend.models.dtos.RentBookRequest;
+import com.example.backend.models.dtos.RentedBookUpdate;
 import com.example.backend.models.dtos.ReviewRequest;
 import com.example.backend.utils.AuthenticationTestUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -313,7 +314,46 @@ public class BookControllerTests extends BaseTestClass {
                 .andExpect(status().isOk()).andReturn();
         List<RentedBook> rentedBooks = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {
         });
-        System.out.println(mvcResult.getResponse().getContentAsString());
         assert rentedBooks.size() == 1;
+    }
+
+    @Test
+    public void getRentalBooksAsUserFails() throws Exception {
+        rentBook();
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/api/data/rentals")
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.user())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void getRentalsAsAdminAtLeastOne() throws Exception {
+        rentBook();
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders
+                        .get("/api/data/rentals")
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.admin())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+        List<RentedBook> rentedBooks = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {
+        });
+        assert rentedBooks.size() == 1;
+    }
+
+    @Test
+    public void updateState() throws Exception {
+        rentBook();
+        RentedBook rentedBook = rentedBookRepository.findAll().iterator().next();
+        long initialSize = rentedBookRepository.findAll().stream().filter(e -> e.state == BookRentalState.RENTED).count();
+        RentedBookUpdate rentedBookUpdate = new RentedBookUpdate(rentedBook.id.inventoryId, rentedBook.id.userId, rentedBook.id.createdAt, BookRentalState.RENTED);
+        mvc.perform(MockMvcRequestBuilders
+                        .patch("/api/data/rentals")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(objectMapper.writeValueAsString(rentedBookUpdate))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.admin())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        assert initialSize + 1 == rentedBookRepository.findAll().stream().filter(e -> e.state == BookRentalState.RENTED).count();
     }
 }
