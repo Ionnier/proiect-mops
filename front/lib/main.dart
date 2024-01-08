@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:front/data/books_repository.dart';
+import 'package:front/data/desk_repository.dart';
 import 'package:front/data/rental_repository.dart';
 import 'package:front/ui/dashboard/dashboard_screen.dart';
 import 'package:front/data/auth_repository.dart';
@@ -22,6 +23,7 @@ void main() async {
       Provider<Settings>(create: (context) => Settings()),
       Provider<BooksRepository>(
           create: (context) => BooksRepository(Settings())),
+      Provider<DeskRepository>(create: (context) => DeskRepository(Settings())),
       Provider<RentalRepository>(
           create: (context) => RentalRepository(Settings()))
     ],

@@ -105,6 +105,15 @@ class MockSettings extends _i1.Mock implements _i6.Settings {
       ) as _i4.Future<void>);
 
   @override
+  void setFavorites(List<String>? value) => super.noSuchMethod(
+        Invocation.method(
+          #setFavorites,
+          [value],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i2.Dio provideDio() => (super.noSuchMethod(
         Invocation.method(
           #provideDio,
