@@ -50,6 +50,14 @@ void main() async {
     ));
     expect(find.text("Desks"), findsOne);
     expect(find.text("See desks"), findsOne);
+    expect(find.byWidgetPredicate((widget) {
+      if (widget is Icon) {
+        if ((widget).icon == Icons.calendar_view_day) {
+          return true;
+        }
+      }
+      return false;
+    }), findsOne);
   });
 
   testWidgets('Desks text moves to DeskScreen', (WidgetTester tester) async {

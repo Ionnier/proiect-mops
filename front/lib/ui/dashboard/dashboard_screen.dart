@@ -66,7 +66,8 @@ class DashboardScreen extends StatelessWidget {
                       builder: (context) => const RentalHistoryScreen()));
             }),
             const Margin(),
-            createCard(context, "Desks", "See desks", Icons.calendar_month, () {
+            createCard(context, "Desks", "See desks", Icons.calendar_view_day,
+                () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const DeskScreen()));
             }),
