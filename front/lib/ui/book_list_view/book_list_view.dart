@@ -14,6 +14,8 @@ class BookListContent extends StatefulWidget {
 
 class _BookListContentState extends State<BookListContent> {
   String currentString = "";
+  String selectedChip = "";
+  bool isSorting = false;
   final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -41,13 +43,55 @@ class _BookListContentState extends State<BookListContent> {
         ),
       )
     ];
-    for (var book in widget.data ?? List.empty()) {
+    final categories = (widget.data ?? []).map((e) => e.category).toSet();
+    children.add(
+      Wrap(
+        spacing: 5.0,
+        children: categories.map((e) {
+          return FilterChip(
+              label: Text(e),
+              selected: selectedChip == e,
+              onSelected: (bool selected) {
+                if (selectedChip == e) {
+                  setState(() {
+                    selectedChip = "";
+                  });
+                  return;
+                }
+                setState(() {
+                  selectedChip = e;
+                });
+              });
+        }).toList(),
+      ),
+    );
+    children.add(TextButton(
+        onPressed: () {
+          setState(() {
+            isSorting = true;
+          });
+        },
+        child: const Text("Sort")));
+    var sortedData = widget.data ?? List.empty();
+    if (isSorting) {
+      sortedData.sort(
+        (a, b) {
+          return a.name.compareTo(b.name);
+        },
+      );
+    } else {
+      sortedData = widget.data ?? List.empty();
+    }
+    for (var book in sortedData) {
       if (currentString.isNotEmpty &&
           !(book as Book)
               .name
               .trim()
               .toLowerCase()
               .contains(currentString.toLowerCase())) {
+        continue;
+      }
+      if (selectedChip.isNotEmpty && (book as Book).category != selectedChip) {
         continue;
       }
       children.add(BookListItem(book: book));
