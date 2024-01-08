@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/data/settings.dart';
 import 'package:front/ui/book_list_view/book_list_view.dart';
 import 'package:front/ui/core/margin.dart';
+import 'package:front/ui/desk_screen/desk_screen.dart';
 import 'package:front/ui/rental_history/rental_history_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -63,6 +64,12 @@ class DashboardScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const RentalHistoryScreen()));
+            }),
+            const Margin(),
+            createCard(context, "Desks", "See desks", Icons.calendar_view_day,
+                () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const DeskScreen()));
             }),
           ]),
         ));

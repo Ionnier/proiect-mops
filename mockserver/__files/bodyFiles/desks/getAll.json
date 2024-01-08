@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "location": "/desk1.png"
+    },
+    {
+        "id": 2,
+        "location": "/desk2.png"
+    },
+    {
+        "id": 3,
+        "location": "/desk3.png"
+    },
+    {
+        "id": 4,
+        "location": "/desk4.png"
+    },
+    {
+        "id": 5,
+        "location": "/desk5.png"
+    },
+    {
+        "id": 6,
+        "location": "/desk6.png"
+    },
+    {
+        "id": 7,
+        "location": "/desk7.png"
+    },
+    {
+        "id": 8,
+        "location": "/desk8.png"
+    },
+    {
+        "id": 9,
+        "location": "/desk9.png"
+    }
+]

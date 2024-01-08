@@ -21,6 +21,7 @@ public class InitializationConfig {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final BookInventoryRepository bookInventoryRepository;
+    private final DeskRepository deskRepository;
 
     public static String ADMIN_EMAIL = "admin@admin.com";
     public static String ADMIN_PASSWORD = "adminpassword";
@@ -50,6 +51,10 @@ public class InitializationConfig {
             bookRepository.save(new Book(null, "Pride and Prejudice", "Romance", getDate(1813, 1, 28), author3));
             Book book4 = bookRepository.save(new Book(null, "The Old Man and the Sea", "Fiction", getDate(1952, 9, 1), author4));
             bookInventoryRepository.save(new BookInventory(null, "", book4));
+
+            for (int i = 1; i <= 9; i++) {
+                deskRepository.save(new Desk());
+            }
         };
     }
 
