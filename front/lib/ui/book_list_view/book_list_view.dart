@@ -1,7 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:front/data/books_repository.dart';
+import 'package:front/models/book.dart';
 import 'package:front/ui/book_list_view/book_list_item.dart';
 import 'package:provider/provider.dart';
+
+class BookListContent extends StatefulWidget {
+  final List<Book>? data;
+  const BookListContent({super.key, this.data});
+
+  @override
+  State<BookListContent> createState() => _BookListContentState();
+}
+
+class _BookListContentState extends State<BookListContent> {
+  String currentString = "";
+  final textController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> children = [
+      ListTile(
+        leading: const Icon(Icons.search),
+        title: TextField(
+          controller: textController,
+          decoration: const InputDecoration(
+              hintText: 'Search', border: InputBorder.none),
+          onChanged: (value) {
+            setState(() {
+              currentString = value;
+            });
+          },
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.cancel),
+          onPressed: () {
+            textController.clear();
+            setState(() {
+              currentString = "";
+            });
+          },
+        ),
+      )
+    ];
+    for (var book in widget.data ?? List.empty()) {
+      if (currentString.isNotEmpty &&
+          !(book as Book)
+              .name
+              .trim()
+              .toLowerCase()
+              .contains(currentString.toLowerCase())) {
+        continue;
+      }
+      children.add(BookListItem(book: book));
+    }
+    return ListView(
+      padding: const EdgeInsets.all(8.0),
+      children: children,
+    );
+  }
+}
 
 class BookListView extends StatelessWidget {
   const BookListView({super.key});
@@ -25,12 +81,8 @@ class BookListView extends StatelessWidget {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
-                    snapshot.data;
-                    return ListView(
-                      padding: const EdgeInsets.all(8.0),
-                      children: (snapshot.data ?? List.empty()).map((book) {
-                        return BookListItem(book: book);
-                      }).toList(),
+                    return BookListContent(
+                      data: snapshot.data,
                     );
                   }
               }
