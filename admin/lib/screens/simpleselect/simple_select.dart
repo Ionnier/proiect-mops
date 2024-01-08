@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
 
 class SimpleSelect extends StatefulWidget {
-  const SimpleSelect(
-      {super.key, required this.endpoint, required this.linksKeeper});
+  SimpleSelect(
+      {super.key,
+      required this.endpoint,
+      required this.linksKeeper,
+      required this.prelucrateEmbedded,
+      required this.onRowSelect});
   final String endpoint;
   final List<String> linksKeeper;
+  final bool prelucrateEmbedded;
+  final void Function(int index, dynamic map) onRowSelect;
   @override
   State<SimpleSelect> createState() => _SimpleSelectState();
 }
@@ -28,8 +34,12 @@ class _SimpleSelectState extends State<SimpleSelect> {
           if (result.statusCode != 200) {
             throw Exception("Status code ${result.statusCode}");
           }
-          var newData =
-              result.data["_embedded"][widget.endpoint.split("/").last];
+          dynamic newData;
+          if (widget.prelucrateEmbedded) {
+            newData = result.data["_embedded"][widget.endpoint.split("/").last];
+          } else {
+            newData = result.data;
+          }
           for (var element in (newData as List<dynamic>)) {
             if (element is Map<String, dynamic>) {
               for (var link in widget.linksKeeper) {
@@ -66,7 +76,10 @@ class _SimpleSelectState extends State<SimpleSelect> {
         : errorMessage != null
             ? Text(errorMessage!)
             : (data as List<dynamic>).isNotEmpty
-                ? JsonTable(data)
+                ? JsonTable(
+                    data,
+                    onRowSelect: widget.onRowSelect,
+                  )
                 : const SizedBox(
                     width: 16,
                   );
