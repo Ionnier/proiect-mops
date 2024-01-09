@@ -12,7 +12,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder(toBuilder=true)
 public class Book {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

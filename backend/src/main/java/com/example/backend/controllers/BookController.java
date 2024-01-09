@@ -37,8 +37,7 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Void> rentBook(@AuthenticationPrincipal User user, @RequestBody @Valid RentBookRequest rentBookRequest) throws ErrorController.BadRequest, ErrorController.NotFoundException {
-        Instant instant = Instant.ofEpochMilli(rentBookRequest.getStartDateTimestamp());
-        Date newDate = Date.from(instant);
+        Date newDate = getDate(rentBookRequest.getStartDateTimestamp());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(newDate);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -51,6 +50,12 @@ public class BookController {
             throw new ErrorController.NotFoundException();
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    public static Date getDate(Long millis) {
+        Instant instant = Instant.ofEpochMilli(millis);
+        Date newDate = Date.from(instant);
+        return newDate;
     }
 
     @PostMapping("/reviews")
