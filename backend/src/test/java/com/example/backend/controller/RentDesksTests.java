@@ -139,5 +139,35 @@ public class RentDesksTests extends BaseTestClass {
         assert initialSize == rentedDeskRepository.count();
     }
 
+    @Test
+    void rentDeskNullId() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/api/desks/30")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.user())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void rentDeskFound() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/api/desks/1")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.user())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void rentDeskInvalidId() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/api/desks/asd")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(authenticationTestUtils.authorization, authenticationTestUtils.user())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
 
 }

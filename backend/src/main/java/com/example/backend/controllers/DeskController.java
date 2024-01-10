@@ -7,6 +7,7 @@ import com.example.backend.models.User;
 import com.example.backend.models.dtos.Interval;
 import com.example.backend.models.dtos.RentBookRequest;
 import com.example.backend.models.dtos.RentDeskRequest;
+import com.example.backend.models.responses.DeskDetails;
 import com.example.backend.models.responses.DeskResponse;
 import com.example.backend.repositories.DeskRepository;
 import com.example.backend.repositories.RentedDeskRepository;
@@ -80,5 +81,11 @@ public class DeskController {
         rentedDeskRepository.saveAll(toAddDesks);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{id}")
+    public DeskDetails getAll(@PathVariable Long id) throws ErrorController.NotFoundException {
+        Desk desk = deskRepository.findById(id).orElseThrow(ErrorController.NotFoundException::new);
+        return new DeskDetails(desk, rentedDeskRepository.findByDesk(desk).stream().map(e -> new Interval(e.id.createdAt, e.dueDate)).toList());
     }
 }
