@@ -86,6 +86,6 @@ public class DeskController {
     @GetMapping("/{id}")
     public DeskDetails getAll(@PathVariable Long id) throws ErrorController.NotFoundException {
         Desk desk = deskRepository.findById(id).orElseThrow(ErrorController.NotFoundException::new);
-        return new DeskDetails(desk, rentedDeskRepository.findByDesk(desk).stream().map(e -> new Interval(e.id.createdAt, e.dueDate)).toList());
+        return new DeskDetails(new DeskResponse(desk), rentedDeskRepository.findByDesk(desk).stream().map(e -> new Interval(e.id.createdAt, e.dueDate)).toList());
     }
 }

@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeskDetails {
-    Desk desk;
+    DeskResponse desk;
     List<Interval> reservedIntervals;
 }
