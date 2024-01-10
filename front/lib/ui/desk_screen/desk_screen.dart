@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/data/books_repository.dart';
 import 'package:front/data/desk_repository.dart';
 import 'package:front/ui/desk_screen/desk_screen_item.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +29,10 @@ class DeskScreen extends StatelessWidget {
                         children: (snapshot.data ?? [])
                             .map((e) => Row(children: [
                                   const Spacer(),
-                                  DeskListItem(desk: e),
+                                  DeskListItem(
+                                    desk: e,
+                                    showImage: true,
+                                  ),
                                   const Spacer()
                                 ]))
                             .toList());

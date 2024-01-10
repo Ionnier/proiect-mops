@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:front/data/books_repository.dart';
 import 'package:front/data/rental_repository.dart';
 import 'package:front/data/settings.dart';
-import 'package:front/models/rentedbook.dart';
 import 'package:front/ui/dashboard/dashboard_screen.dart';
 import 'package:front/ui/rental_history/rental_history_item.dart';
 import 'package:front/ui/rental_history/rental_history_screen.dart';

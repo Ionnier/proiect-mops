@@ -10,8 +10,6 @@ import 'package:admin/screens/rentalscreen/rental_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:admin/main.dart';
-
 void main() {
   testWidgets('Home screen has rentals objects', (WidgetTester tester) async {
     await tester.pumpWidget(
