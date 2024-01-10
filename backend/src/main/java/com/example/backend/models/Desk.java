@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class Desk {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

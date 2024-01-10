@@ -84,14 +84,14 @@ class _BookListContentState extends State<BookListContent> {
     }
     for (var book in sortedData) {
       if (currentString.isNotEmpty &&
-          !(book as Book)
+          !book
               .name
               .trim()
               .toLowerCase()
               .contains(currentString.toLowerCase())) {
         continue;
       }
-      if (selectedChip.isNotEmpty && (book as Book).category != selectedChip) {
+      if (selectedChip.isNotEmpty && book.category != selectedChip) {
         continue;
       }
       children.add(BookListItem(book: book));

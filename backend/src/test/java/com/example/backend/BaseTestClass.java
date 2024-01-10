@@ -1,9 +1,6 @@
 package com.example.backend;
 
-import com.example.backend.repositories.BookInventoryRepository;
-import com.example.backend.repositories.BookRepository;
-import com.example.backend.repositories.RentedBookRepository;
-import com.example.backend.repositories.UserRepository;
+import com.example.backend.repositories.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,5 +36,8 @@ public abstract class BaseTestClass {
 
     @Autowired
     protected RentedBookRepository rentedBookRepository;
+
+    @Autowired
+    protected RentedDeskRepository rentedDeskRepository;
 
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
 
 class SimpleSelect extends StatefulWidget {
-  SimpleSelect(
+  const SimpleSelect(
       {super.key,
       required this.endpoint,
       required this.linksKeeper,

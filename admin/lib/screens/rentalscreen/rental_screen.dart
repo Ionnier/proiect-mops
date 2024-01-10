@@ -86,7 +86,7 @@ class _RentalScreenState extends State<RentalScreen> {
     items.add(SimpleSelect(
       key: key,
       endpoint: "/data/rentals",
-      linksKeeper: [],
+      linksKeeper: const [],
       prelucrateEmbedded: false,
       onRowSelect: (int index, map) {
         final Map<String, dynamic> newMap = (map as Map<String, dynamic>)["id"];

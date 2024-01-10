@@ -45,28 +45,7 @@ public class RentBookService {
             List<RentedBook> currentReservations = rentedBookRepository.findByBookInventory(bookInventory);
             boolean isAvailable = true;
             for (RentedBook reservation : currentReservations) {
-                Instant reservationStartTimestamp = Instant.ofEpochMilli(reservation.getId().createdAt);
-                Instant reservationEndTimestamp = Instant.ofEpochMilli(reservation.dueDate);
-
-                if (desiredStartTimestamp.compareTo(reservationStartTimestamp) == 0) {
-                    isAvailable = false;
-                    break;
-                }
-
-                if (desiredEndTimestamp.compareTo(reservationEndTimestamp) == 0) {
-                    isAvailable = false;
-                    break;
-                }
-
-                if (desiredStartTimestamp.isAfter(reservationStartTimestamp) && desiredStartTimestamp.isBefore(reservationEndTimestamp)) {
-                    isAvailable = false;
-                    break;
-                }
-                if (desiredEndTimestamp.isAfter(reservationStartTimestamp) && desiredEndTimestamp.isBefore(reservationEndTimestamp)) {
-                    isAvailable = false;
-                    break;
-                }
-                if (desiredStartTimestamp.isBefore(reservationStartTimestamp) && desiredEndTimestamp.isAfter(reservationEndTimestamp)) {
+                if (!checkValidInterval(desiredStartTimestamp, desiredEndTimestamp, reservation.getId().createdAt, reservation.dueDate)) {
                     isAvailable = false;
                     break;
                 }
@@ -83,5 +62,31 @@ public class RentBookService {
         }
 
         return rentedBookRepository.save(new RentedBook(user, availableInventory, desiredEndTimestamp.toEpochMilli(), desiredStartTimestamp.toEpochMilli()));
+    }
+
+    public static boolean checkValidInterval(Instant desiredStartTimestamp, Instant desiredEndTimestamp, Long startTimeStamp, Long endTimeStamp) {
+        Instant reservationStartTimestamp = Instant.ofEpochMilli(startTimeStamp);
+        Instant reservationEndTimestamp = Instant.ofEpochMilli(endTimeStamp);
+
+        if (desiredStartTimestamp.compareTo(reservationStartTimestamp) == 0) {
+            return false;
+        }
+
+        if (desiredEndTimestamp.compareTo(reservationEndTimestamp) == 0) {
+            return false;
+        }
+
+        if (desiredStartTimestamp.isAfter(reservationStartTimestamp) && desiredStartTimestamp.isBefore(reservationEndTimestamp)) {
+            return false;
+        }
+        if (desiredEndTimestamp.isAfter(reservationStartTimestamp) && desiredEndTimestamp.isBefore(reservationEndTimestamp)) {
+            return false;
+        }
+
+        if (desiredStartTimestamp.isBefore(reservationStartTimestamp) && desiredEndTimestamp.isAfter(reservationEndTimestamp)) {
+            return false;
+        }
+
+        return true;
     }
 }

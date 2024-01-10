@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/data/books_repository.dart';
 import 'package:front/ui/core/margin.dart';
-import 'package:provider/provider.dart';
 
 AlertDialog showReviewDailog(
     BuildContext context, int bookId, BooksRepository booksRepository) {
@@ -27,7 +26,7 @@ class _ReviewDialogContentState extends State<ReviewDialogContent> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(),
           )
         : Column(
